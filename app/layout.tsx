@@ -4,6 +4,7 @@ import { Source_Sans_3, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { LanguageProvider } from '@/lib/language-context'
 import './globals.css'
+import { GlobalAudioPlayer } from "@/components/global-audio-player";
 
 const sourceSans = Source_Sans_3({ 
   subsets: ["latin"],
@@ -75,6 +76,7 @@ export default function RootLayout({
     <html lang="en" className={`${sourceSans.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased">
         <LanguageProvider>
+          <GlobalAudioPlayer />
           {children}
         </LanguageProvider>
         <Analytics />
