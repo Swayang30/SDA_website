@@ -262,7 +262,7 @@ export function Navbar() {
                     <Accordion type="single" collapsible className="w-full">
                       {mainNavigation.map((item) => (
                         <AccordionItem key={item.title} value={item.title}>
-                          <AccordionTrigger className="text-foreground hover:text-primary">
+                          <AccordionTrigger className="text-foreground p-3 hover:text-primary">
                             {item.title}
                           </AccordionTrigger>
                           <AccordionContent>
@@ -284,7 +284,7 @@ export function Navbar() {
                     </Accordion>
                     
                     {/* Mobile Language Switcher */}
-                    <div className="mt-6 pt-6 border-t">
+                    <div className="mt-6 pt-6 pl-3 border-t">
                       <p className="text-sm font-medium text-foreground mb-3">{t.nav.changeLanguage}</p>
                       <div className="flex flex-wrap gap-2">
                         {languages.map((lang) => (
