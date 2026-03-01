@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { LotusIcon } from "@/components/icons/spiritual-icons";
+import TextType from "@/components/TextType";
 
 interface HeroSectionProps {
   title: string;
@@ -67,9 +68,8 @@ export function HeroSection({
 
       {/* Content */}
       <div
-        className={`relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 ${
-          align === "center" ? "text-center" : "text-left"
-        }`}
+        className={`relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 ${align === "center" ? "text-center" : "text-center"
+          }`}
       >
         {subtitle && (
           <div className="mb-6 flex items-center justify-center gap-3">
@@ -82,7 +82,16 @@ export function HeroSection({
         )}
 
         <h1 className="font-serif text-4xl font-semibold tracking-tight text-background sm:text-5xl md:text-6xl lg:text-7xl text-balance">
-          {title}
+          <TextType
+            text={[title]}
+            as="span"
+            typingSpeed={55}
+            pauseDuration={1500}
+            showCursor
+            cursorCharacter="|"
+            deletingSpeed={50}
+            loop={false}
+          />
         </h1>
 
         {description && (

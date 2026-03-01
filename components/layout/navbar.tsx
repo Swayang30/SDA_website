@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, Search, Globe, Check } from "lucide-react";
+import { Search, Globe, Check, ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,19 +11,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { languages } from "@/lib/navigation";
 import { LotusIcon } from "@/components/icons/spiritual-icons";
 import { cn } from "@/lib/utils";
@@ -30,11 +18,121 @@ import { SearchModal } from "./search-modal";
 import { useLanguage } from "@/lib/language-context";
 import type { Language } from "@/lib/translations";
 
+// Card color palette for the CardNav-style animation
+const cardColors = [
+  { bg: "#c06014", text: "#fff" },  // warm saffron
+  { bg: "#a0522d", text: "#fff" },  // deep sienna
+  { bg: "#8b4513", text: "#fff" },  // saddle brown
+  { bg: "#b5651d", text: "#fff" },  // golden ochre
+  { bg: "#9b4f2b", text: "#fff" },  // terracotta
+  { bg: "#7a4a2a", text: "#fff" },  // earthy brown
+  { bg: "#6b3a2a", text: "#fff" },  // maroon earth
+];
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+
+  // CardNav animation state
+  const [isCardNavOpen, setIsCardNavOpen] = useState(false);
+  const [isCardNavExpanded, setIsCardNavExpanded] = useState(false);
+  const cardNavRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+
+  const setCardRef = (i: number) => (el: HTMLDivElement | null) => {
+    if (el) cardsRef.current[i] = el;
+  };
+
+  const calculateCardNavHeight = useCallback(() => {
+    const navEl = cardNavRef.current;
+    if (!navEl) return 0;
+    const contentEl = navEl.querySelector('.cardnav-content') as HTMLElement;
+    if (contentEl) {
+      const clone = contentEl.cloneNode(true) as HTMLElement;
+      clone.style.visibility = 'hidden';
+      clone.style.position = 'absolute';
+      clone.style.height = 'auto';
+      clone.style.pointerEvents = 'none';
+      navEl.appendChild(clone);
+      const h = clone.scrollHeight + 16;
+      navEl.removeChild(clone);
+      return h;
+    }
+    return 300;
+  }, []);
+
+  const createCardNavTimeline = useCallback(() => {
+    const navEl = cardNavRef.current;
+    if (!navEl) return null;
+
+    gsap.set(navEl, { height: 0, overflow: 'hidden' });
+    gsap.set(cardsRef.current, { y: 50, opacity: 0 });
+
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(navEl, {
+      height: calculateCardNavHeight,
+      duration: 0.4,
+      ease: 'power3.out',
+    });
+
+    tl.to(
+      cardsRef.current,
+      { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out', stagger: 0.08 },
+      '-=0.1'
+    );
+
+    return tl;
+  }, [calculateCardNavHeight]);
+
+  useLayoutEffect(() => {
+    const tl = createCardNavTimeline();
+    tlRef.current = tl;
+    return () => {
+      tl?.kill();
+      tlRef.current = null;
+    };
+  }, [createCardNavTimeline]);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      if (!tlRef.current) return;
+      if (isCardNavExpanded) {
+        const newHeight = calculateCardNavHeight();
+        gsap.set(cardNavRef.current, { height: newHeight });
+        tlRef.current.kill();
+        const newTl = createCardNavTimeline();
+        if (newTl) {
+          newTl.progress(1);
+          tlRef.current = newTl;
+        }
+      } else {
+        tlRef.current.kill();
+        const newTl = createCardNavTimeline();
+        if (newTl) {
+          tlRef.current = newTl;
+        }
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isCardNavExpanded, calculateCardNavHeight, createCardNavTimeline]);
+
+  const toggleCardNav = () => {
+    const tl = tlRef.current;
+    if (!tl) return;
+    if (!isCardNavExpanded) {
+      setIsCardNavOpen(true);
+      setIsCardNavExpanded(true);
+      tl.play(0);
+    } else {
+      setIsCardNavOpen(false);
+      tl.eventCallback('onReverseComplete', () => setIsCardNavExpanded(false));
+      tl.reverse();
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,58 +225,39 @@ export function Navbar() {
             : "bg-transparent"
         )}
       >
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
           <div className="flex h-20 items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <LotusIcon className="h-7 w-7 text-primary" />
-              </div>
-              <div className="hidden sm:block">
-                <p className="font-serif text-lg font-semibold text-foreground leading-tight">
-                  {language === "hi" ? "स्वामी देबानंद" : language === "bn" ? "স্বামী দেবানন্দ" : "Swami Debananda"}
-                </p>
-                <p className="text-xs text-muted-foreground tracking-wider uppercase">
-                  {language === "hi" ? "आश्रम" : language === "bn" ? "আশ্রম" : "Ashram"}
-                </p>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {mainNavigation.map((item) => (
-                <DropdownMenu key={item.title}>
-                  <DropdownMenuTrigger asChild>
-                    <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-primary transition-colors rounded-md hover:bg-primary/5">
-                      {item.title}
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="start"
-                    className="w-72 bg-card p-2"
-                  >
-                    {item.children?.map((child) => (
-                      <DropdownMenuItem key={child.href} asChild>
-                        <Link
-                          href={child.href}
-                          className="flex flex-col items-start gap-1 p-3 rounded-md cursor-pointer"
-                        >
-                          <span className="font-medium text-foreground">
-                            {child.title}
-                          </span>
-                          {child.description && (
-                            <span className="text-xs text-muted-foreground">
-                              {child.description}
-                            </span>
-                          )}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ))}
+            {/* Left: CardNav Hamburger Toggle */}
+            <div className="flex items-center">
+              <button
+                className="group flex flex-col items-center justify-center gap-[6px] cursor-pointer p-2 rounded-md hover:bg-primary/5 transition-colors"
+                onClick={toggleCardNav}
+                aria-label={isCardNavExpanded ? 'Close menu' : 'Open menu'}
+              >
+                <div
+                  className={cn(
+                    "w-[24px] h-[2px] bg-foreground/80 transition-all duration-300 ease-linear origin-center group-hover:opacity-75",
+                    isCardNavOpen && "translate-y-[4px] rotate-45"
+                  )}
+                />
+                <div
+                  className={cn(
+                    "w-[24px] h-[2px] bg-foreground/80 transition-all duration-300 ease-linear origin-center group-hover:opacity-75",
+                    isCardNavOpen && "-translate-y-[4px] -rotate-45"
+                  )}
+                />
+              </button>
             </div>
+
+            {/* Center: Logo + Name */}
+            <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 group">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <LotusIcon className="h-6 w-6 text-primary" />
+              </div>
+              <span className="hidden sm:inline font-serif text-lg font-semibold text-foreground whitespace-nowrap">
+                {language === "hi" ? "स्वामी देबानंद आश्रम" : language === "bn" ? "স্বামী দেবানন্দ আশ্রম" : "Swami Debananda Ashram"}
+              </span>
+            </Link>
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-2">
@@ -236,91 +315,60 @@ export function Navbar() {
               >
                 <Link href="/donate">{t.nav.donateNow}</Link>
               </Button>
+            </div>
+          </div>
 
-              {/* Mobile Menu Toggle */}
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="lg:hidden text-foreground"
-                  >
-                    <Menu className="h-6 w-6" />
-                    <span className="sr-only">Open menu</span>
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-full sm:w-96 bg-card">
-                  <SheetHeader>
-                    <SheetTitle className="flex items-center gap-3">
-                      <LotusIcon className="h-8 w-8 text-primary" />
-                      <span className="font-serif">
-                        {language === "hi" ? "स्वामी देबानंद आश्रम" : language === "bn" ? "স্বামী দেবানন্দ আশ্রম" : "Swami Debananda Ashram"}
-                      </span>
-                    </SheetTitle>
-                  </SheetHeader>
-                  <div className="mt-8">
-                    <Accordion type="single" collapsible className="w-full">
-                      {mainNavigation.map((item) => (
-                        <AccordionItem key={item.title} value={item.title}>
-                          <AccordionTrigger className="text-foreground p-3 hover:text-primary">
-                            {item.title}
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <div className="flex flex-col gap-2 pl-4">
-                              {item.children?.map((child) => (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={() => setMobileMenuOpen(false)}
-                                  className="py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                  {child.title}
-                                </Link>
-                              ))}
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                    
-                    {/* Mobile Language Switcher */}
-                    <div className="mt-6 pt-6 pl-3 border-t">
-                      <p className="text-sm font-medium text-foreground mb-3">{t.nav.changeLanguage}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {languages.map((lang) => (
-                          <Button
-                            key={lang.code}
-                            variant={language === lang.code ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => setLanguage(lang.code as Language)}
-                            className={cn(
-                              language === lang.code 
-                                ? "bg-primary text-primary-foreground" 
-                                : "border-primary text-primary hover:bg-primary/10 bg-transparent"
-                            )}
-                          >
-                            {lang.nativeName}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="mt-8 pt-8 border-t">
-                      <Button
-                        asChild
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                      >
-                        <Link
-                          href="/donate"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {t.cta.supportMission}
-                        </Link>
-                      </Button>
-                    </div>
+          {/* CardNav Expandable Panel */}
+          <div
+            ref={cardNavRef}
+            className={cn(
+              "absolute left-0 right-0 top-20 z-40 rounded-b-xl shadow-lg overflow-hidden",
+              isScrolled ? "bg-card/95 backdrop-blur-md" : "bg-card/95 backdrop-blur-md"
+            )}
+            style={{ height: 0 }}
+          >
+            <div
+              className={cn(
+                "cardnav-content p-3 flex flex-wrap gap-3 justify-center",
+                isCardNavExpanded ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
+              )}
+            >
+              {mainNavigation.map((item, idx) => (
+                <div
+                  key={`card-${item.title}-${idx}`}
+                  ref={setCardRef(idx)}
+                  className="nav-card select-none relative flex flex-col gap-2 p-4 rounded-xl min-w-[140px] flex-[1_1_auto] max-w-[200px]"
+                  style={{
+                    backgroundColor: cardColors[idx % cardColors.length].bg,
+                    color: cardColors[idx % cardColors.length].text,
+                  }}
+                >
+                  <div className="font-medium tracking-tight text-lg mb-1">
+                    {item.title}
                   </div>
-                </SheetContent>
-              </Sheet>
+                  <div className="flex flex-col gap-[2px] mt-auto">
+                    {item.children?.map((child, i) => (
+                      <Link
+                        key={`${child.href}-${i}`}
+                        href={child.href}
+                        className="inline-flex items-center gap-1 text-sm no-underline transition-opacity duration-300 hover:opacity-75"
+                        style={{ color: cardColors[idx % cardColors.length].text }}
+                        onClick={() => {
+                          setIsCardNavOpen(false);
+                          const tl = tlRef.current;
+                          if (tl) {
+                            tl.eventCallback('onReverseComplete', () => setIsCardNavExpanded(false));
+                            tl.reverse();
+                          }
+                        }}
+                      >
+                        <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                        {child.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </nav>
