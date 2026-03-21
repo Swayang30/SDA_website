@@ -16,6 +16,12 @@ import {
   SunriseIcon,
 } from "@/components/icons/spiritual-icons";
 import { useLanguage } from "@/lib/language-context";
+import {
+  useScrollAnimation,
+  useStaggerAnimation,
+} from "@/hooks/use-scroll-animation";
+import { DURATION, STAGGER } from "@/lib/animations";
+import { PageTransition } from "@/components/layout/page-transition";
 
 const featuredTeachings = [
   {
@@ -127,6 +133,17 @@ const upcomingEvents = [
 export default function HomePage() {
   const { language, t } = useLanguage();
 
+  // ─── Scroll animation refs ────────────────────────────────────
+  const welcomeTextRef = useScrollAnimation({ type: "slide-left", duration: DURATION.slow });
+  const welcomeImageRef = useScrollAnimation({ type: "slide-right", duration: DURATION.slow });
+  const valuesGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
+  const teachingsGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
+  const eventsGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
+  const statsGridRef = useStaggerAnimation({ type: "scale-in", stagger: STAGGER.stats });
+  const ctaRef = useScrollAnimation({ type: "fade-up", duration: DURATION.slow });
+  const scheduleLeftRef = useScrollAnimation({ type: "slide-left" });
+  const scheduleRightRef = useScrollAnimation({ type: "slide-right" });
+
   const coreValues = [
     {
       icon: OmIcon,
@@ -197,7 +214,8 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      <main>
+      <PageTransition>
+        <main>
         {/* Hero Section */}
         <HeroSection
           title={t.hero.title}
@@ -219,7 +237,7 @@ export default function HomePage() {
         {/* Welcome Section */}
         <SectionWrapper variant="white">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div ref={welcomeTextRef}>
               <p className="text-sm font-medium uppercase tracking-widest text-primary mb-4">
                 {t.welcome.eyebrow}
               </p>
@@ -251,7 +269,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative" ref={welcomeImageRef}>
               <div className="aspect-4/3 overflow-hidden rounded-2xl">
                 <img
                   src="/images/swamiji-portrait.jpg"
@@ -261,7 +279,7 @@ export default function HomePage() {
               </div>
               <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-xl shadow-lg max-w-xs hidden md:block">
                 <p className="font-serif text-lg italic text-foreground">
-                  "{t.welcome.quote}"
+                  &quot;{t.welcome.quote}&quot;
                 </p>
                 <p className="mt-2 text-sm text-primary font-medium">
                   — Swami Debananda
@@ -278,7 +296,7 @@ export default function HomePage() {
             title={t.values.title}
             description={t.values.description}
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8" ref={valuesGridRef}>
             {coreValues.map((value) => (
               <div
                 key={value.title}
@@ -320,7 +338,7 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={teachingsGridRef}>
             {featuredTeachings.map((teaching) => (
               <TeachingCard
                 key={teaching.href}
@@ -352,7 +370,7 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" ref={eventsGridRef}>
             {upcomingEvents.map((event, index) => (
               <EventCard
                 key={event.href}
@@ -365,7 +383,7 @@ export default function HomePage() {
 
         {/* Statistics Section */}
         <SectionWrapper variant="primary" className="py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center" ref={statsGridRef}>
             {[
               { value: "30+", label: t.stats.yearsOfService, icon: SunriseIcon },
               { value: "50,000+", label: t.stats.devoteesServed, icon: Users },
@@ -387,7 +405,7 @@ export default function HomePage() {
 
         {/* Call to Action */}
         <SectionWrapper variant="white">
-          <div className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto" ref={ctaRef}>
             <LotusIcon className="h-12 w-12 text-primary mx-auto" />
             <h2 className="mt-6 font-serif text-3xl md:text-4xl font-semibold text-foreground text-balance">
               {t.cta.title}
@@ -418,14 +436,14 @@ export default function HomePage() {
         {/* Daily Schedule Preview */}
         <SectionWrapper variant="cream">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="aspect-video overflow-hidden rounded-2xl">
+            <div className="aspect-video overflow-hidden rounded-2xl" ref={scheduleLeftRef}>
               <img
                 src="/images/meditation-hall.jpg"
                 alt="Meditation hall at the ashram"
                 className="h-full w-full object-cover"
               />
             </div>
-            <div>
+            <div ref={scheduleRightRef}>
               <p className="text-sm font-medium uppercase tracking-widest text-primary mb-4">
                 {t.schedule.eyebrow}
               </p>
@@ -462,7 +480,8 @@ export default function HomePage() {
             </div>
           </div>
         </SectionWrapper>
-      </main>
+        </main>
+      </PageTransition>
 
       <Footer />
     </>

@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { LanguageProvider } from '@/lib/language-context'
 import './globals.css'
 import { GlobalAudioPlayer } from "@/components/global-audio-player";
+import { CustomCursor } from "@/components/ui/custom-cursor";
 
 const sourceSans = Source_Sans_3({ 
   subsets: ["latin"],
@@ -76,6 +77,7 @@ export default function RootLayout({
     <html lang="en" className={`${sourceSans.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased">
         <LanguageProvider>
+          <CustomCursor />
           <GlobalAudioPlayer />
           {children}
         </LanguageProvider>

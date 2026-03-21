@@ -165,6 +165,31 @@ export const translations = {
       delete: 'Delete',
       edit: 'Edit',
       close: 'Close',
+      viewAll: 'View All',
+      subscribe: 'Subscribe',
+      orderNow: 'Order Now',
+      downloadPdf: 'Download PDF',
+      home: 'Home',
+      featured: 'Featured',
+      sendMessage: 'Send Message',
+      contactForRegistration: 'Contact for Registration',
+      viewAccommodation: 'View Accommodation',
+      viewFullCalendar: 'View Full Calendar',
+      searchPublications: 'Search publications...',
+      enterYourEmail: 'Enter your email',
+      playMusic: 'Play Music',
+    },
+    // Search Modal
+    searchModal: {
+      title: 'Search the Ashram',
+      placeholder: 'Search teachings, videos, books, events...',
+      noResults: 'No results found for',
+      trySearching: 'Try searching for teachings, meditation, or specific topics',
+      searchAcross: 'Search across all teachings, videos, books, and events',
+      teaching: 'Teaching',
+      video: 'Video',
+      book: 'Book',
+      event: 'Event',
     },
     // Donate Page
     donatePage: {
@@ -218,6 +243,32 @@ export const translations = {
       accommodation: 'Accommodation',
       accommodationDesc: 'Simple rooms are available for sincere seekers. Prior booking is required.',
       guidelines: 'Visitor Guidelines',
+    },
+    aboutPage: {
+      title: 'About the Ashram',
+      description: 'A sacred space dedicated to spiritual growth, Vedantic wisdom, and inner transformation',
+      sections: {
+        swamiji: {
+          title: 'About Swamiji',
+          description: 'Discover the life, teachings, and spiritual journey of Swami Debananda, the founder of our ashram.',
+        },
+        philosophy: {
+          title: 'Core Values & Philosophy',
+          description: 'Explore the Vedantic principles and core values that guide our spiritual community.',
+        },
+        message: {
+          title: 'Message from Swamiji',
+          description: "Read Swamiji's message to seekers on the spiritual path and his vision for the ashram.",
+        },
+        history: {
+          title: 'Ashram History',
+          description: 'Trace the journey of Swami Debananda Ashram from its humble beginnings to the present day.',
+        },
+        lineage: {
+          title: 'Lineage & Tradition',
+          description: 'Learn about the sacred lineage (parampara) and the tradition that informs our teachings.',
+        },
+      },
     },
   },
   hi: {
@@ -384,6 +435,31 @@ export const translations = {
       delete: 'हटाएं',
       edit: 'संपादित करें',
       close: 'बंद करें',
+      viewAll: 'सभी देखें',
+      subscribe: 'सदस्यता',
+      orderNow: 'अभी ऑर्डर करें',
+      downloadPdf: 'PDF डाउनलोड',
+      home: 'मुखपृष्ठ',
+      featured: 'विशेष',
+      sendMessage: 'संदेश भेजें',
+      contactForRegistration: 'पंजीकरण के लिए संपर्क करें',
+      viewAccommodation: 'आवास देखें',
+      viewFullCalendar: 'पूरा कैलेंडर देखें',
+      searchPublications: 'प्रकाशन खोजें...',
+      enterYourEmail: 'अपना ईमेल दर्ज करें',
+      playMusic: 'संगीत चलाएं',
+    },
+    // Search Modal
+    searchModal: {
+      title: 'आश्रम में खोजें',
+      placeholder: 'शिक्षाएं, वीडियो, पुस्तकें, कार्यक्रम खोजें...',
+      noResults: 'कोई परिणाम नहीं मिला',
+      trySearching: 'शिक्षाएं, ध्यान, या विशिष्ट विषय खोजने का प्रयास करें',
+      searchAcross: 'सभी शिक्षाओं, वीडियो, पुस्तकों और कार्यक्रमों में खोजें',
+      teaching: 'शिक्षा',
+      video: 'वीडियो',
+      book: 'पुस्तक',
+      event: 'कार्यक्रम',
     },
     // Donate Page
     donatePage: {
@@ -437,6 +513,32 @@ export const translations = {
       accommodation: 'आवास',
       accommodationDesc: 'सच्चे साधकों के लिए सादे कमरे उपलब्ध हैं। पूर्व बुकिंग आवश्यक है।',
       guidelines: 'आगंतुक दिशानिर्देश',
+    },
+    aboutPage: {
+      title: 'आश्रम के बारे में',
+      description: 'आध्यात्मिक विकास, वेदान्तिक ज्ञान और आंतरिक परिवर्तन को समर्पित एक पवित्र स्थान',
+      sections: {
+        swamiji: {
+          title: 'स्वामीजी के बारे में',
+          description: 'हमारे आश्रम के संस्थापक स्वामी देवानंद के जीवन, शिक्षाओं और आध्यात्मिक यात्रा की खोज करें।',
+        },
+        philosophy: {
+          title: 'मूल्य एवं दर्शन',
+          description: 'हमारे आध्यात्मिक समुदाय का मार्गदर्शन करने वाले वेदान्तिक सिद्धांतों और मुख्य मूल्यों का अन्वेषण करें।',
+        },
+        message: {
+          title: 'स्वामीजी का संदेश',
+          description: 'आध्यात्मिक पथ पर साधकों के लिए स्वामीजी का संदेश और आश्रम के लिए उनका दृष्टिकोण पढ़ें।',
+        },
+        history: {
+          title: 'आश्रम का इतिहास',
+          description: 'स्वामी देवानंद आश्रम की विनम्र शुरुआत से लेकर वर्तमान तक की यात्रा का पता लगाएं।',
+        },
+        lineage: {
+          title: 'परंपरा और वंशावली',
+          description: 'उस पवित्र वंशावली (परंपरा) और परंपरा के बारे में जानें जो हमारी शिक्षाओं को सूचित करती है।',
+        },
+      },
     },
   },
   bn: {
@@ -603,6 +705,31 @@ export const translations = {
       delete: 'মুছুন',
       edit: 'সম্পাদনা',
       close: 'বন্ধ',
+      viewAll: 'সব দেখুন',
+      subscribe: 'সদস্যতা',
+      orderNow: 'এখনই অর্ডার করুন',
+      downloadPdf: 'PDF ডাউনলোড',
+      home: 'হোম',
+      featured: 'বিশেষ',
+      sendMessage: 'বার্তা পাঠান',
+      contactForRegistration: 'নিবন্ধনের জন্য যোগাযোগ করুন',
+      viewAccommodation: 'থাকার ব্যবস্থা দেখুন',
+      viewFullCalendar: 'পূর্ণ ক্যালেন্ডার দেখুন',
+      searchPublications: 'প্রকাশনা খুঁজুন...',
+      enterYourEmail: 'আপনার ইমেল লিখুন',
+      playMusic: 'সংগীত বাজান',
+    },
+    // Search Modal
+    searchModal: {
+      title: 'আশ্রমে খুঁজুন',
+      placeholder: 'শিক্ষা, ভিডিও, বই, অনুষ্ঠান খুঁজুন...',
+      noResults: 'কোনো ফলাফল পাওয়া যায়নি',
+      trySearching: 'শিক্ষা, ধ্যান, বা নির্দিষ্ট বিষয় খুঁজে দেখুন',
+      searchAcross: 'সকল শিক্ষা, ভিডিও, বই এবং অনুষ্ঠানে খুঁজুন',
+      teaching: 'শিক্ষা',
+      video: 'ভিডিও',
+      book: 'বই',
+      event: 'অনুষ্ঠান',
     },
     // Donate Page
     donatePage: {
@@ -657,7 +784,33 @@ export const translations = {
       accommodationDesc: 'সত্যিকারের সাধকদের জন্য সাধারণ কক্ষ উপলব্ধ। আগাম বুকিং প্রয়োজন।',
       guidelines: 'দর্শনার্থী নির্দেশিকা',
     },
+    aboutPage: {
+      title: 'আশ্রম সম্পর্কে',
+      description: 'আধ্যাত্মিক বিকাশ, বৈদান্তিক প্রজ্ঞা এবং অন্তর রূপান্তরের জন্য নিবেদিত একটি পবিত্র স্থান',
+      sections: {
+        swamiji: {
+          title: 'স্বামীজী সম্পর্কে',
+          description: 'আমাদের আশ্রমের প্রতিষ্ঠাতা স্বামী দেবানন্দের জীবন, শিক্ষা এবং আধ্যাত্মিক যাত্রার অন্বেষণ করুন।',
+        },
+        philosophy: {
+          title: 'মূল্যবোধ ও দর্শন',
+          description: 'আমাদের আধ্যাত্মিক সম্প্রদায়কে পরিচালিত করে এমন বৈদান্তিক নীতি এবং মূল মূল্যবোধগুলি অন্বেষণ করুন।',
+        },
+        message: {
+          title: 'স্বামীজীর বার্তা',
+          description: 'আধ্যাত্মিক পথে সাধকদের জন্য স্বামীজীর বার্তা এবং আশ্রমের জন্য তাঁর দৃষ্টিভঙ্গি পড়ুন।',
+        },
+        history: {
+          title: 'আশ্রমের ইতিহাস',
+          description: 'স্বামী দেবানন্দ আশ্রমের নম্র শুরু থেকে বর্তমান পর্যন্ত যাত্রার খোঁজ নিন।',
+        },
+        lineage: {
+          title: 'পরম্পরা ও ঐতিহ্য',
+          description: 'পবিত্র পরম্পরা এবং সেই ঐতিহ্য সম্পর্কে জানুন যা আমাদের শিক্ষাকে রূপ দেয়।',
+        },
+      },
+    },
   },
-} as const;
+};
 
 export type TranslationKey = keyof typeof translations.en;

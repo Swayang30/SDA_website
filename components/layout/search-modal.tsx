@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useLanguage } from "@/lib/language-context";
 
 interface SearchResult {
   title: string;
@@ -52,21 +53,22 @@ const typeIcons = {
   event: Calendar,
 };
 
-const typeLabels = {
-  teaching: "Teaching",
-  video: "Video",
-  book: "Book",
-  event: "Event",
-};
-
 interface SearchModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export function SearchModal({ open, onOpenChange }: SearchModalProps) {
+  const { t } = useLanguage();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
+
+  const typeLabels = {
+    teaching: t.searchModal.teaching,
+    video: t.searchModal.video,
+    book: t.searchModal.book,
+    event: t.searchModal.event,
+  };
 
   const handleSearch = (value: string) => {
     setQuery(value);
@@ -88,13 +90,13 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
       <DialogContent className="sm:max-w-2xl bg-card">
         <DialogHeader>
           <DialogTitle className="font-serif text-xl">
-            Search the Ashram
+            {t.searchModal.title}
           </DialogTitle>
         </DialogHeader>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search teachings, videos, books, events..."
+            placeholder={t.searchModal.placeholder}
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-10 h-12 text-base bg-secondary border-border"
@@ -135,10 +137,10 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
             ) : (
               <div className="py-12 text-center">
                 <p className="text-muted-foreground">
-                  No results found for "{query}"
+                  {t.searchModal.noResults} "{query}"
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Try searching for teachings, meditation, or specific topics
+                  {t.searchModal.trySearching}
                 </p>
               </div>
             )}
@@ -148,7 +150,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
         {query.length === 0 && (
           <div className="mt-4 py-8 text-center">
             <p className="text-muted-foreground">
-              Search across all teachings, videos, books, and events
+              {t.searchModal.searchAcross}
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {["Meditation", "Bhagavad Gita", "Vedanta", "Retreats"].map(

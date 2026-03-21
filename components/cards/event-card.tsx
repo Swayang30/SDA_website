@@ -5,6 +5,7 @@ import { Calendar, MapPin, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/language-context";
 
 interface EventCardProps {
   title: string;
@@ -29,6 +30,8 @@ export function EventCard({
   featured = false,
   category,
 }: EventCardProps) {
+  const { t } = useLanguage();
+
   return (
     <Card
       className={cn(
@@ -87,7 +90,7 @@ export function EventCard({
           variant="outline"
           className="mt-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
         >
-          <Link href={href}>Learn More</Link>
+          <Link href={href}>{t.common.learnMore}</Link>
         </Button>
       </CardContent>
     </Card>

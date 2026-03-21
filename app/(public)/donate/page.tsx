@@ -22,6 +22,7 @@ import {
 import { LotusIcon } from "@/components/icons/spiritual-icons";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useLanguage } from "@/lib/language-context";
 
 const donationAmounts = ["₹500", "₹1,000", "₹2,500", "₹5,000", "₹10,000", "₹25,000"];
 
@@ -49,17 +50,41 @@ const impactItems = [
 ];
 
 export default function DonatePage() {
+  const { t } = useLanguage();
   const [selectedAmount, setSelectedAmount] = useState("₹2,500");
   const [customAmount, setCustomAmount] = useState("");
+
+  const impactItems = [
+    {
+      icon: Users,
+      amount: "₹500",
+      description: "Provides meals for 10 visiting devotees",
+    },
+    {
+      icon: BookOpen,
+      amount: "₹2,500",
+      description: "Supports printing of 50 spiritual books",
+    },
+    {
+      icon: Home,
+      amount: "₹5,000",
+      description: "Sponsors one person's week-long retreat",
+    },
+    {
+      icon: Heart,
+      amount: "₹10,000",
+      description: "Helps maintain the ashram facilities for a month",
+    },
+  ];
 
   return (
     <>
       <PageHeader
-        title="Support Our Mission"
-        description="Your generous contribution helps us preserve and spread the timeless wisdom of Vedanta"
+        title={t.donatePage.heroTitle}
+        description={t.donatePage.heroDescription}
         breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Donate", href: "/donate" },
+          { label: t.common.home, href: "/" },
+          { label: t.nav.donate, href: "/donate" },
         ]}
       />
 
@@ -69,16 +94,16 @@ export default function DonatePage() {
           {/* Left: Donation Form */}
           <div>
             <h2 className="font-serif text-2xl font-semibold text-foreground">
-              Make a Donation
+              {t.donatePage.donateNow}
             </h2>
             <p className="mt-2 text-muted-foreground">
-              All donations are tax-exempt under Section 80G of the Income Tax Act.
+              {t.donatePage.taxBenefitsDesc}
             </p>
 
             {/* Amount Selection */}
             <div className="mt-8">
               <Label className="text-sm font-medium text-foreground">
-                Select Amount
+                {t.donatePage.selectAmount}
               </Label>
               <div className="mt-3 grid grid-cols-3 gap-3">
                 {donationAmounts.map((amount) => (
@@ -101,7 +126,7 @@ export default function DonatePage() {
               </div>
               <div className="mt-4">
                 <Label htmlFor="custom-amount" className="text-sm text-muted-foreground">
-                  Or enter custom amount
+                  {t.donatePage.customAmount}
                 </Label>
                 <div className="relative mt-2">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -110,7 +135,7 @@ export default function DonatePage() {
                   <Input
                     id="custom-amount"
                     type="number"
-                    placeholder="Enter amount"
+                    placeholder={t.donatePage.enterAmount}
                     value={customAmount}
                     onChange={(e) => {
                       setCustomAmount(e.target.value);
@@ -125,21 +150,21 @@ export default function DonatePage() {
             {/* Payment Methods */}
             <div className="mt-8">
               <Label className="text-sm font-medium text-foreground">
-                Payment Method
+                {t.donatePage.paymentMethods}
               </Label>
               <Tabs defaultValue="upi" className="mt-3">
                 <TabsList className="w-full bg-secondary">
                   <TabsTrigger value="upi" className="flex-1">
                     <Smartphone className="h-4 w-4 mr-2" />
-                    UPI
+                    {t.donatePage.upiPayment}
                   </TabsTrigger>
                   <TabsTrigger value="card" className="flex-1">
                     <CreditCard className="h-4 w-4 mr-2" />
-                    Card
+                    {t.donatePage.internationalCards}
                   </TabsTrigger>
                   <TabsTrigger value="bank" className="flex-1">
                     <Building2 className="h-4 w-4 mr-2" />
-                    Bank
+                    {t.donatePage.bankTransfer}
                   </TabsTrigger>
                 </TabsList>
 

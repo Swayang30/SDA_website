@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { SectionWrapper } from "@/components/ui/section-wrapper";
+import { SectionWrapper, SectionHeader } from "@/components/ui/section-wrapper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -116,7 +114,6 @@ const newsletters = [
 export default function PublicationsPage() {
   return (
     <>
-      <Navbar />
       <main>
         {/* Hero Section */}
         <section className="relative bg-linear-to-b from-secondary to-background py-20 md:py-28">
@@ -133,10 +130,11 @@ export default function PublicationsPage() {
         </section>
 
         {/* Books Section */}
-        <SectionWrapper
-          title="Books by Swami Debananda"
-          subtitle="Comprehensive spiritual literature for seekers at all stages of their journey"
-        >
+        <SectionWrapper>
+          <SectionHeader
+            title="Books by Swami Debananda"
+            description="Comprehensive spiritual literature for seekers at all stages of their journey"
+          />
           {/* Search */}
           <div className="mx-auto mb-10 max-w-md">
             <div className="relative">
@@ -204,11 +202,11 @@ export default function PublicationsPage() {
         </SectionWrapper>
 
         {/* Free Downloads Section */}
-        <SectionWrapper
-          title="Free Downloads"
-          subtitle="Complimentary spiritual resources to support your practice"
-          className="bg-secondary/30"
-        >
+        <SectionWrapper className="bg-secondary/30">
+          <SectionHeader
+            title="Free Downloads"
+            description="Complimentary spiritual resources to support your practice"
+          />
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {freePdfs.map((pdf, index) => (
               <Card key={index} className="text-center">
@@ -234,10 +232,11 @@ export default function PublicationsPage() {
         </SectionWrapper>
 
         {/* Newsletter Archive */}
-        <SectionWrapper
-          title="Newsletter Archive"
-          subtitle="Monthly spiritual insights and ashram updates"
-        >
+        <SectionWrapper>
+          <SectionHeader
+            title="Newsletter Archive"
+            description="Monthly spiritual insights and ashram updates"
+          />
           <div className="mx-auto max-w-2xl">
             <div className="mb-8 rounded-lg bg-primary/5 p-6 text-center">
               <h3 className="font-serif text-lg font-semibold">
@@ -306,7 +305,6 @@ export default function PublicationsPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
