@@ -132,8 +132,6 @@ const upcomingEvents = [
 
 const galleryItems = [
   ...Array.from({ length: 17 }, (_, i) => ({ type: "image", src: `/images/G${i + 1}.jpg` })),
-  { type: "video", src: `/images/G'sV1.mp4` },
-  { type: "video", src: `/images/G'sV2.mp4` },
 ];
 
 export default function HomePage() {
