@@ -42,18 +42,18 @@ const featuredTeachings = [
     category: "Vedanta",
   },
   {
-    title: "Morning Meditation Practice",
-    titleHi: "प्रातः ध्यान अभ्यास",
-    titleBn: "প্রাতঃ ধ্যান অভ্যাস",
+    title: "Swamiji's Teaching on Morning Meditation & Inner Stillness",
+    titleHi: "प्रातः ध्यान और आंतरिक शांति पर स्वामीजी का प्रवचन",
+    titleBn: "প্রাতঃ ধ্যান ও অন্তর স্থিরতায় স্বামীজীর প্রবচন",
     excerpt:
-      "A guided meditation session to start your day with inner peace and clarity.",
+      "Swami Debananda guides us through the profound practice of morning meditation — how to awaken in stillness and carry that inner silence throughout the day.",
     excerptHi:
-      "आंतरिक शांति और स्पष्टता के साथ अपना दिन शुरू करने के लिए एक निर्देशित ध्यान सत्र।",
+      "स्वामी देबानंद हमें प्रातःकालीन ध्यान के गहन अभ्यास के माध्यम से मार्गदर्शन करते हैं — शांति में जागृत होना और उस आंतरिक मौन को पूरे दिन बनाए रखना।",
     excerptBn:
-      "অন্তর শান্তি ও স্বচ্ছতার সাথে আপনার দিন শুরু করতে একটি নির্দেশিত ধ্যান সেশন।",
+      "স্বামী দেবানন্দ আমাদের প্রাতঃকালীন ধ্যানের গভীর অনুশীলনের মাধ্যমে পরিচালিত করেন — নীরবতায় জেগে ওঠা এবং সেই অন্তর নীরবতা সারাদিন বহন করা।",
     href: "/teachings/videos/morning-meditation",
     type: "video" as const,
-    duration: "25 min",
+    duration: "Video Teaching",
     date: "January 25, 2026",
     image: "/images/meditation-hall.jpg",
     category: "Meditation",
@@ -79,22 +79,22 @@ const featuredTeachings = [
 
 const upcomingEvents = [
   {
-    title: "Mahashivaratri Celebration",
-    titleHi: "महाशिवरात्रि समारोह",
-    titleBn: "মহাশিবরাত্রি উদযাপন",
+    title: "Swamiji's Teaching on the Sacred Night of Mahashivaratri",
+    titleHi: "महाशिवरात्रि की पवित्र रात पर स्वामीजी का प्रवचन",
+    titleBn: "মহাশিবরাত্রির পবিত্র রাতে স্বামীজীর প্রবচন",
     description:
-      "Join us for an all-night celebration of Lord Shiva with chanting, meditation, and special pujas. Experience the profound energy of this sacred night.",
+      "In this profound video discourse, Swami Debananda illuminates the deeper spiritual significance of Mahashivaratri — the great night of Shiva as pure consciousness. Watch and be transformed.",
     descriptionHi:
-      "जप, ध्यान और विशेष पूजाओं के साथ भगवान शिव की रात्रि भर उत्सव में हमसे जुड़ें। इस पवित्र रात्रि की गहन ऊर्जा का अनुभव करें।",
+      "इस गहन वीडियो प्रवचन में, स्वामी देबानंद महाशिवरात्रि के गहरे आध्यात्मिक महत्व को प्रकाशित करते हैं — शुद्ध चेतना के रूप में शिव की महान रात। देखें और परिवर्तित हों।",
     descriptionBn:
-      "জপ, ধ্যান এবং বিশেষ পূজার সাথে ভগবান শিবের সারারাত উদযাপনে আমাদের সাথে যোগ দিন। এই পবিত্র রাতের গভীর শক্তি অনুভব করুন।",
+      "এই গভীর ভিডিও প্রবচনে, স্বামী দেবানন্দ মহাশিবরাত্রির গভীর আধ্যাত্মিক তাৎপর্য আলোকিত করেন — বিশুদ্ধ চেতনারূপে শিবের মহান রাত। দেখুন এবং পরিবর্তিত হন।",
     date: "February 26, 2026",
-    time: "6:00 PM onwards",
-    location: "Main Temple Hall",
+    time: "Video Teaching",
+    location: "Watch Online",
     href: "/events/upcoming/mahashivaratri-2026",
     image: "/images/event-satsang.jpg",
     featured: true,
-    category: "Festival",
+    category: "Video Teaching",
   },
   {
     title: "Weekend Meditation Retreat",
@@ -130,6 +130,12 @@ const upcomingEvents = [
   },
 ];
 
+const galleryItems = [
+  ...Array.from({ length: 17 }, (_, i) => ({ type: "image", src: `/images/G${i + 1}.jpg` })),
+  { type: "video", src: `/images/G'sV1.mp4` },
+  { type: "video", src: `/images/G'sV2.mp4` },
+];
+
 export default function HomePage() {
   const { language, t } = useLanguage();
 
@@ -139,6 +145,7 @@ export default function HomePage() {
   const valuesGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
   const teachingsGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
   const eventsGridRef = useStaggerAnimation({ stagger: STAGGER.cards });
+  const galleryGridRef = useStaggerAnimation({ stagger: 0.1 });
   const statsGridRef = useStaggerAnimation({ type: "scale-in", stagger: STAGGER.stats });
   const ctaRef = useScrollAnimation({ type: "fade-up", duration: DURATION.slow });
   const scheduleLeftRef = useScrollAnimation({ type: "slide-left" });
@@ -377,6 +384,42 @@ export default function HomePage() {
                 {...getLocalizedEvent(event)}
                 featured={index === 0}
               />
+            ))}
+          </div>
+        </SectionWrapper>
+
+        {/* Gallery Section */}
+        <SectionWrapper variant="white">
+          <SectionHeader
+            eyebrow={t.gallery.eyebrow}
+            title={t.gallery.title}
+            description={t.gallery.description}
+          />
+          <div 
+            className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6" 
+            ref={galleryGridRef}
+          >
+            {galleryItems.map((item, i) => (
+              <div 
+                key={i} 
+                className="break-inside-avoid shadow-sm hover:shadow-xl transition-shadow rounded-2xl overflow-hidden relative group"
+              >
+                {item.type === "image" ? (
+                  <img 
+                    src={item.src} 
+                    alt={`Gallery image ${i + 1}`} 
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" 
+                    loading="lazy" 
+                  />
+                ) : (
+                  <video 
+                    src={item.src} 
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" 
+                    preload="metadata" 
+                    controls
+                  />
+                )}
+              </div>
             ))}
           </div>
         </SectionWrapper>

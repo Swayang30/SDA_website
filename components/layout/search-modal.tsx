@@ -39,10 +39,10 @@ const mockResults: SearchResult[] = [
     excerpt: "Swamiji's seminal work on Advaita Vedanta...",
   },
   {
-    title: "Mahashivaratri Celebration 2026",
-    type: "event",
+    title: "Swamiji's Teaching on the Sacred Night of Mahashivaratri",
+    type: "video",
     href: "/events/upcoming/mahashivaratri-2026",
-    excerpt: "Join us for the sacred night of Lord Shiva...",
+    excerpt: "A profound video discourse on the spiritual significance of Mahashivaratri...",
   },
 ];
 

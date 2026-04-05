@@ -163,9 +163,9 @@ export function PageHeader({
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav className="mb-6" aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
               {breadcrumbs.map((crumb, index) => (
-                <li key={crumb.href} className="flex items-center gap-2">
+                <li key={index} className="flex items-center gap-2">
                   {index > 0 && (
                     <span className="text-muted-foreground">/</span>
                   )}
@@ -180,7 +180,7 @@ export function PageHeader({
             </ol>
           </nav>
         )}
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground md:text-5xl text-balance">
+        <h1 className="font-serif text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl text-balance">
           {title}
         </h1>
         {description && (

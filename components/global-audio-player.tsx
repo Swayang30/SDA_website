@@ -38,7 +38,7 @@ export function GlobalAudioPlayer() {
       {/* Floating Button */}
       <button
         onClick={toggleAudio}
-        className="fixed bottom-6 right-6 bg-primary text-white px-4 py-2 rounded-full shadow-lg z-50"
+        className="fixed bottom-4 right-4 md:bottom-8 md:right-8 text-sm md:text-base bg-primary text-white px-3 py-2 md:px-4 md:py-2 rounded-full shadow-lg z-[60] hover:scale-105 transition-transform"
       >
         {isPlaying ? "Pause Music" : "Play Music"}
       </button>

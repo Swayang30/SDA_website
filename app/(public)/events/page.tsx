@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 
 const upcomingEvents = [
   {
-    title: "Mahashivaratri Celebration",
+    title: "Swamiji's Teaching on the Sacred Night of Mahashivaratri",
     description:
-      "Join us for an all-night celebration of Lord Shiva with continuous chanting, meditation, abhishekam, and special pujas. Experience the profound spiritual energy of this most sacred night.",
+      "In this profound video discourse, Swami Debananda illuminates the deeper spiritual significance of Mahashivaratri — the great night of Shiva as pure consciousness. Watch, listen and be transformed.",
     date: "February 26, 2026",
-    time: "6:00 PM - 6:00 AM",
-    location: "Main Temple Hall",
+    time: "Video Teaching",
+    location: "Watch Online",
     href: "/events/upcoming/mahashivaratri-2026",
     image: "/images/event-satsang.jpg",
-    category: "Festival",
+    category: "Video Teaching",
   },
   {
     title: "Weekend Meditation Retreat",
